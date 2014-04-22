@@ -31,14 +31,14 @@ public class MapGrid extends JPanel{
     public int height;
     private List<Point> fillCells;
     
-    public MapGrid(JLabel map) {
-        this.mapImage = map;
-        this.width = map.getWidth();
-        this.height = map.getHeight();
+    public MapGrid() {
+        //this.mapImage = map;
+        this.width = 900;
+        this.height = 500;
         this.fillCells = new ArrayList<>();
-        grid = new State[mapImage.getWidth()][mapImage.getHeight()];
-	for (int i = 0; i < mapImage.getWidth(); i++) {
-			for (int j = 0; j < mapImage.getHeight(); j++) {
+        grid = new State[width][height];
+	for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				grid[i][j] = new State(i,j);
 			}
 		}
@@ -60,7 +60,7 @@ public class MapGrid extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         for (Point point : fillCells){
              g2d.setColor(Color.RED);
-             g2d.fillRect(point.x, point.y, 1, 1);             
+             g2d.fillRect(point.x, point.y, 5, 5);             
         }            
     }
         
@@ -69,7 +69,7 @@ public class MapGrid extends JPanel{
         repaint();
     }
 
-    public static void unmain(String[] a) {
+    public static void main(String[] a) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +78,7 @@ public class MapGrid extends JPanel{
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
 
-                MapGrid grid = new MapGrid(new JLabel());
+                MapGrid grid = new MapGrid();
                 JFrame window = new JFrame();
                 window.setSize(840, 560);
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

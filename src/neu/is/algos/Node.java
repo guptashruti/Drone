@@ -2,23 +2,32 @@ package neu.is.algos;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 import neu.is.dstarlight.State;
 import neu.is.gui.MapGrid;
+import neu.is.mapFrames.NewGridJPanel;
 
 public class Node implements Comparable<Node> {
 
     public String name;
-    public ArrayList<Edge> adj;
     public ArrayList<Drone> drones;
     public ArrayList<Product> products;
     public State nodeState;
     public double minDistance = Double.POSITIVE_INFINITY;
     public Node previous = null;
+    public JPanel grid;
 
-    public Node(MapGraph g,String nodeName,Point loc, MapGrid grid){
+    public Node(MapGraph g,String nodeName,Point loc, JPanel grid){
         name = nodeName ;
-        nodeState = grid.getStateFromGrid(loc.x, loc.y);
-        adj = new ArrayList<>();
+        if(grid instanceof NewGridJPanel){
+            this.grid = (NewGridJPanel) grid;
+            nodeState = ((NewGridJPanel)grid).getStateFromGrid(loc.x, loc.y);
+        }
+        else if(grid instanceof MapGrid){
+            this.grid = (MapGrid) grid;
+            nodeState = ((MapGrid)grid).getStateFromGrid(loc.x, loc.y);
+        }
+        
         drones = new ArrayList<>();        
         products = new ArrayList<>();
         for(String s: g.getProductCategory()){
